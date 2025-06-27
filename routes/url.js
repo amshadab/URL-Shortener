@@ -1,8 +1,10 @@
 const express = require("express");
-
-
+const {generateNewShortURL}=require("../controllers/url");
+const {redirectToURL} = require("../controllers/url");
 
 const router = express.Router();
 
 
-router.post("/")
+router.post("/",generateNewShortURL);
+router.get("/:shortId",redirectToURL);
+module.exports=router;
