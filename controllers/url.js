@@ -15,7 +15,7 @@ async function generateNewShortURL(req,res) {
         visitHistory:[],
     });
 
-    return res.json({id:shortID});
+    return res.json({id:shortID,shortURL:`http://localhost:8000/url/${shortID}`});
 }
 
 
@@ -29,7 +29,15 @@ async function redirectToURL(req,res) {
 return res.redirect(entry.redirectURL);
 }
 
+async function getAnalytics(req,res) {
+    const result=await URL.findOne({shortId: req.params.shortId},{visitHistory:1,_id:0});
+
+return res.json({totalClicks:result.visitHistory.length,analytics:result.visitHistory});
+
+}
+
 module.exports={
     generateNewShortURL,
-    redirectToURL,    
+    redirectToURL,  
+    getAnalytics,  
 }
