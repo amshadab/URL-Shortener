@@ -40,7 +40,8 @@ return res.json({totalClicks:result.visitHistory.length,analytics:result.visitHi
 
 
 async function getHomePage(req,res) {
-    return res.render("home");
+   const allURl = await URL.find({});
+    return res.render("home",{urls:allURl});
 }
 
 module.exports={
