@@ -15,7 +15,9 @@ async function generateNewShortURL(req,res) {
         visitHistory:[],
     });
 
-    return res.json({id:shortID,shortURL:`http://localhost:8000/url/${shortID}`});
+    return res.render("home",{id:shortID});
+
+    // return res.json({id:shortID,shortURL:`http://localhost:8000/url/${id:shortID}`});
 }
 
 
@@ -36,8 +38,14 @@ return res.json({totalClicks:result.visitHistory.length,analytics:result.visitHi
 
 }
 
+
+async function getHomePage(req,res) {
+    return res.render("home");
+}
+
 module.exports={
     generateNewShortURL,
     redirectToURL,  
     getAnalytics,  
+    getHomePage,
 }
