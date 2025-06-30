@@ -13,9 +13,11 @@ async function generateNewShortURL(req,res) {
         shortId:shortID,
         redirectURL:body.url,
         visitHistory:[],
+        createdBy:req.user._id,
     });
 
-    return res.render("home",{id:shortID});
+    const allUrls = await URL.find({ createdBy: req.user._id });
+return res.render("home", { urls: allUrls });
 
     // return res.json({id:shortID,shortURL:`http://localhost:8000/url/${id:shortID}`});
 }
@@ -40,7 +42,10 @@ return res.json({totalClicks:result.visitHistory.length,analytics:result.visitHi
 
 
 async function getHomePage(req,res) {
-   const allURl = await URL.find({});
+    if(!req.user){
+        return res.redirect("/login");
+    }
+   const allURl = await URL.find({createdBy:req.user._id});
     return res.render("home",{urls:allURl});
 }
 
